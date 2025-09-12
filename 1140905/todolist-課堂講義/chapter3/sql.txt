@@ -1,0 +1,13 @@
+create table if not exists todo(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    title varchar(100) not null,
+    `text` text,
+    created datetime DEFAULT CURRENT_TIMESTAMP,
+    date_completed datetime,
+    important boolean DEFAULT false,
+    user_id int not null,
+    FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
+);
+
+
+insert into todo(title,`text`) values('去家樂福購買商品','1.買雞蛋 2.買最新財經雜誌');

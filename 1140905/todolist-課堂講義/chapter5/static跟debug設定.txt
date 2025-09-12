@@ -1,0 +1,43 @@
+[1]開發模式
+Settings.py
+- Debug=True
+
+1.外部檔案
+- *.css/*.js/*.png
+- 建立static目錄
+- STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+2.引用靜態
+- template
+	-第一行 {% load static %}
+	- {% static 'css/style.css' %}
+	- {% static 'js/index.js' %}
+	- {% static 'img/background.png' %}
+
+
+[2]生產模式
+Settings.py
+- Debug=False
+
+1.外部檔案
+- 自動蒐集機制
+	- STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+	- python manage.py collectstatic
+
+
+[3]發布模式
+- pip install whitenoise
+- settings.py
+	- "whitenoise.middleware.WhiteNoiseMiddleware",
+	- STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+
+
+
+
+
+
+

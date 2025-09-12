@@ -1,0 +1,56 @@
+0.pipenv install django dj-database-url dj-static gunicorn psycopg2 pymysql
+
+
+1.pip freeze > requirements.txt
+
+
+2.settings.py
+DEBUG = False
+
+ALLOWED_HOSTS = ['*']
+
+3.Procfile
+web: gunicorn password_generator.wsgi    ==>password_generator\wsgi.py
+
+
+4.runtime.txt
+python-3.9.13
+
+
+5.heroku login
+
+heroku config:set DISABLE_COLLECTSTATIC=1
+
+
+6.git push heroku master
+
+
+heroku run python manage.py runserver
+
+
+$ git config --global core.safecrlf false
+
+STATIC_URL = 'static/'
+
+
+
+STATICFILES_DIRS = [
+os.path.join(BASE_DIR,'static'),
+]
+
+
+==== 正式發布用====
+pipenv install whitenoise
+
+
+whitenoise.middleware.WhiteNoiseMiddleware
+
+
+STATIC_ROOT = os.path.join(BASE_DIR,
+'staticfiles')
+STATICFILES_STORAGE =
+'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
+python manage.py collectstatic

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}
+Completed TodoList
+{% endblock %}
+{% block content %}
+
+<div class="hero is-link is-fullheight-with-navbar">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-multiline is-centered">
+        {% for todo in todos %}
+        {% if todo.completed %}
+        <div class="column is-3">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title is-size-4">
+                <a href="{% url 'todo' todo.id %}">
+                  {% if todo.important %}
+                  <span class="has-text-danger">{{ todo.title|truncatechars:15 }}</a></span>
+                {% else %}
+                <span>{{ todo.title|truncatechars:15 }}</a></span>
+                {% endif %}
+                <br />
+              </p>
+
+              <p class="has-text-right pr-3 py-3"></p>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                <small class="has-text-grey">{{todo.created}}</small><br />
+                {{todo.text}} <br />
+                <p class="has-text-gray-light has-text-right is-size-6">
+                  <small></small>
+                </p>
+              </div>
+            </div>
+            <footer class="card-footer">
+
+            </footer>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+重點:
+1.右上角選擇區域(東京)
+2.上面搜尋RDS
+3.點選新增資料庫
+4.選擇MYSQL
+5.選擇免費方案
+6.帳號/密碼設定
+7.選擇公開存取
+8.資料庫名稱設定
+9.建立 
+10.不用時請關閉
+
+
+其他都用預設選項
+
+[1]開發模式
+Settings.py
+- Debug=True
+
+1.外部檔案
+- *.css/*.js/*.png
+- 建立static目錄
+- STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+2.引用靜態
+- template
+	-第一行 {% load static %}
+	- {% static 'css/style.css' %}
+	- {% static 'js/index.js' %}
+	- {% static 'img/background.png' %}
+
+
+[2]生產模式
+Settings.py
+- Debug=False
+
+1.外部檔案
+- 自動蒐集機制
+	- STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+	- python manage.py collectstatic
+
+
+[3]發布模式
+- pip install whitenoise
+- settings.py
+	- "whitenoise.middleware.WhiteNoiseMiddleware",
+	- STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+
+
+
+
+
+
+

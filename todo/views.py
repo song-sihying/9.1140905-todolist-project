@@ -3,6 +3,23 @@ from django.http import HttpResponse
 import json
 from .models import Todo
 
+def create_todo(request):
+    #GET
+
+    #POST
+    if reques.method =="POST":
+        print(request.POST)
+        title=request.POST.get("title")
+        text=request.POST.get("text")
+        important=request.POST.get("important")
+
+        important = True if important == "on" else False
+
+        #建立資料
+        todo=Todo.objects.create(title=title , text=text , important=important)
+        todo.save()
+        
+    return render(request, "todo/create-todo.html")
 
 # 1.新增todo.html
 # 2.將todo傳出到{{todo}}
