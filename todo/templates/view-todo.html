@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>單一事項</title>
+    <style>
+        .todo {
+            background-color: aqua;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 6px;
+            width: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Todo</h1>
+    <div class="todo">
+        {% if todo %}
+        <h4>{{todo.created}}</h4>
+        <h3>{{todo.title}}</h3>
+        <p>{{todo.text}}</p>
+        <u>{{todo.important}}</u>
+        {% else %}
+        <h2>無此代辦事項</h2>
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+安裝django 
+pip install django 
+
+1.新增主要專案目錄
+
+django-admin startproject todolist .
+
+2.啟動server
+python manage.py runserver
+
+3.新增服務
+python manage.py startapp todo
+
+4.同步資料表
+python manage.py migrate
+
+5.建立超級使用者
+python manage.py createsuperuser
+
+6.新增資料表
+python manage.py mkemigrations
+
+7.啟動資料庫互動模式
+python manage.py shell
+from todo.models import Todo <==引用資料表
+使用：
+1.Todo.objects.all()
+2.Todo.objects.get(id=4)<=不存在會報錯
+3.Todo.objects.filter(id=4) <=不存在不會報錯（為空串列）
