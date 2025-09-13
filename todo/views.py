@@ -1,28 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import json
 from .models import Todo
+from .forms import TodoForm
+
 
 def create_todo(request):
-    #GET
-
+    message =""
+    form = TodoForm()
     #POST
-    if reques.method =="POST":
-        print(request.POST)
-        title=request.POST.get("title")
-        text=request.POST.get("text")
-        important=request.POST.get("important")
+    if request.method =="POST":
+        message="建立成功！"
+        return redirect("todolist")
+    return render(request, "todo/create-todo.html",{"message":message,"form":form})
 
-        important = True if important == "on" else False
 
-        #建立資料
-        todo=Todo.objects.create(title=title , text=text , important=important)
-        todo.save()
-        
-    return render(request, "todo/create-todo.html")
-
-# 1.新增todo.html
-# 2.將todo傳出到{{todo}}
 def view_todo(request, id):
     todo = None
     try:
@@ -34,7 +26,8 @@ def view_todo(request, id):
 
 
 def todolist(request):
-    todos = Todo.objects.all()
+    #order_by 加上 - 號降序 
+    todos = Todo.objects.all().order_by("-created")
 
     return render(request, "todo/todolist.html", {"todos": todos})
 
