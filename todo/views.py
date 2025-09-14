@@ -10,19 +10,31 @@ def create_todo(request):
     form = TodoForm()
     #POST
     if request.method =="POST":
+        form = TodoForm(request.POST)
+        form.save()
         message="建立成功！"
         return redirect("todolist")
+    
     return render(request, "todo/create-todo.html",{"message":message,"form":form})
 
 
 def view_todo(request, id):
-    todo = None
+    message=""
+    #檢視目前
     try:
         todo = Todo.objects.get(id=id)
+        form = TodoForm(instance=todo)
     except Exception as e:
         print(e)
 
-    return render(request, "todo/view-todo.html", {"todo": todo})
+    #更新資料
+    if request.method=="POST":
+        form = TodoForm(request.POST,instance=todo)
+        form.save()
+        message="更新成功!"
+
+    return render(request, "todo/view-todo.html", {"todo": todo,"form": form,"message":message}
+    )
 
 
 def todolist(request):
