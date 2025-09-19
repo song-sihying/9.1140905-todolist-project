@@ -1,0 +1,7 @@
+#!/Users/songsiying/Desktop/📖我的進修生涯📖/聯成-python/6.Django1140716/9.1140905-todolist-project/.venv/bin/python
+import sys
+from sqlparse.__main__ import main
+if __name__ == '__main__':
+    if sys.argv[0].endswith('.exe'):
+        sys.argv[0] = sys.argv[0][:-4]
+    sys.exit(main())

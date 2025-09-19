@@ -1,48 +1,76 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.contrib.auth import login, logout, authenticate
+from django.http import HttpResponse
+import json
+from .models import Todo
+from .forms import TodoForm, CreateTodoForm
+from datetime import datetime
 
 
-def user_login(request):
+def create_todo(request):
     message = ""
-
+    form = CreateTodoForm()
+    # POST
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
-        if not user:
-            message = "帳號或密碼錯誤!"
-        else:
-            login(request, user)
-            message = "登入成功!"
-            return redirect("todolist")
+        form = CreateTodoForm(request.POST)
+        form.save()
+        message = "建立成功!"
+        return redirect("todolist")
 
-    return render(request, "user/login.html", {"message": message})
+    return render(request, "todo/create-todo.html", {"message": message, "form": form})
+
+
+def delete_todo(request, id):
+    # 檢視目前
+    try:
+        todo = Todo.objects.get(id=id)
+        todo.delete()
+    except Exception as e:
+        print(e)
+
+    return redirect("todolist")
+
+
+def view_todo(request, id):
+    message = ""
+    # 檢視目前
+    try:
+        todo = Todo.objects.get(id=id)
+        form = TodoForm(instance=todo)
+    except Exception as e:
+        print(e)
+
+    # 更新資料
+    if request.method == "POST":
+        form = TodoForm(request.POST, instance=todo)
+        todo = form.save(commit=False)
+
+        if todo.completed:
+            todo.date_completed = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            todo.date_completed = None
+
+        todo.save()
+        message = "更新成功!"
+        return redirect("todolist")
+
+    return render(
+        request, "todo/view-todo.html", {"todo": todo, "form": form, "message": message}
+    )
+
+
+def todolist(request):
+    # order_by 加上 - 號降序
+    todos = Todo.objects.all().order_by("-created")
+
+    return render(request, "todo/todolist.html", {"todos": todos})
 
 
 # Create your views here.
-def user_register(request):
-    message = ""
-    form = UserCreationForm()
-    if request.method == "POST":
-        print(request.POST)
-        username = request.POST.get("username")
-        password1 = request.POST.get("password1")
-        password2 = request.POST.get("password2")
+def index(request):
+    return HttpResponse("<h1>Hello django!</h1>")
 
-        # 密碼不能少於8各字元，且兩次密碼相同
-        if len(password1) < 8 or len(password2) < 8:
-            message = "密碼不能少於8各字元!"
-        elif password1 != password2:
-            message = "兩次密碼不相同!"
-        else:
-            if User.objects.filter(username=username):
-                message = "使用者名稱已存在!"
-            else:
-                User.objects.create_user(username=username, password=password1).save()
-                message = "使用者註冊成功!"
-                return redirect("user-login")
 
-            # 使用者名稱已經存在
+def books(request):
+    my_books = {1: "Python", 2: "Java", 3: "C# book"}
+
+    return HttpResponse(json.dumps(my_books), content_type="application/json")

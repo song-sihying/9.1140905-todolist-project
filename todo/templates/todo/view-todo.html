@@ -18,9 +18,9 @@
 
 <body>
     <h1>View Todo</h1>
-    <form action="">
+    <form action="" method="POST">
         {% csrf_token %}
-        {{ form.as_p}}
+        {{ form.as_p }}
         <button type="submit">更新</button>
     </form>
     {{message}}
