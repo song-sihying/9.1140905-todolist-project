@@ -3,6 +3,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 
+def user_logout(request):
+    logout(request)
+
+    return redirect("user-login")
+
 
 def user_login(request):
     message = ""
