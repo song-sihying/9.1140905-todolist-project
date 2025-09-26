@@ -18,7 +18,7 @@ python manage.py migrate
 python manage.py createsuperuser
 
 6.新增資料表
-python manage.py mkemigrations
+python manage.py makemigrations
 
 7.啟動資料庫互動模式
 python manage.py shell
