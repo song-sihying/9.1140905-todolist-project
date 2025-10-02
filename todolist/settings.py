@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "todo.apps.TodoConfig",
     "user.apps.UserConfig",
+    "api.apps.ApiConfig",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -98,7 +100,7 @@ else:
             "USER": os.environ.get("USER"),
             "PASSWORD": os.environ.get("PASSWORD"),
             "HOST": os.environ.get("HOST"),
-            "PORT": int(os.environ.get("PORT")),
+            "DB-PORT": int(os.environ.get("DB-PORT")),
         }
     }
 
